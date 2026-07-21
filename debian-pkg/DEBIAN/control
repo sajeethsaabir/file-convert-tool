@@ -1,0 +1,11 @@
+Package: convertor-tool
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: default-jre (>= 21) | default-jre-headless (>= 21) | java-runtime (>= 21)
+Maintainer: Convertor Tool Team
+Description: Bi-directional document converter
+ Converts between DOCX, PDF, and Markdown formats.
+ Supports: DOCX→MD, PDF→MD, MD→DOCX, MD→PDF.
+ Includes both GUI and CLI interfaces.

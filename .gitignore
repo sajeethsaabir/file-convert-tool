@@ -1,0 +1,13 @@
+target/
+dependency-reduced-pom.xml
+convertor-tool_*.deb
+
+.classpath
+.project
+.settings/
+*.iml
+.idea/
+
+*.swp
+*~
+.DS_Store

@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "purge" ]; then
+    # Only remove user data on purge
+    rm -rf /etc/convertor-tool 2>/dev/null || true
+fi
+
+exit 0
