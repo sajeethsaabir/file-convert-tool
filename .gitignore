@@ -2,6 +2,7 @@ target/
 dependency-reduced-pom.xml
 convertor-tool_*.deb
 convertor-tool-*.rpm
+convertor-tool-*.pkg.tar.zst
 
 .classpath
 .project

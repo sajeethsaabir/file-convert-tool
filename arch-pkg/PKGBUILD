@@ -1,0 +1,28 @@
+# Maintainer: Convertor Tool Team
+
+pkgname=convertor-tool
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='Bi-directional document converter between DOCX, PDF, and Markdown formats'
+arch=('any')
+url='https://github.com/sajeethsaabir/file-convert-tool'
+license=('Apache')
+depends=('java-runtime>=21')
+source=("${pkgname}-${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+  cd "${srcdir}"
+  true
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  install -Dm755 usr/bin/convertor-tool "${pkgdir}/usr/bin/convertor-tool"
+  install -Dm644 usr/share/${pkgname}/${pkgname}.jar "${pkgdir}/usr/share/${pkgname}/${pkgname}.jar"
+  install -Dm644 usr/share/applications/${pkgname}.desktop "${pkgdir}/usr/share/applications/${pkgname}.desktop"
+  install -Dm644 usr/share/icons/hicolor/scalable/apps/${pkgname}.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/${pkgname}.svg"
+  install -Dm644 usr/share/man/man1/${pkgname}.1.gz "${pkgdir}/usr/share/man/man1/${pkgname}.1.gz"
+  install -Dm644 usr/share/doc/${pkgname}/copyright "${pkgdir}/usr/share/doc/${pkgname}/copyright"
+}
