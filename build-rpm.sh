@@ -92,11 +92,16 @@ rpmbuild -bb "$RPM_BUILD_DIR/SPECS/${NAME}.spec" \
     --define "_srcrpmdir $RPM_BUILD_DIR/SRPMS" 2>&1
 
 # Copy the resulting RPM to project root
-RPM_FILE="$RPM_BUILD_DIR/RPMS/noarch/${NAME}-${VERSION}-1.*.noarch.rpm"
+RPM_FILE=$(find "$RPM_BUILD_DIR/RPMS/noarch" -name "${NAME}-${VERSION}-1*.noarch.rpm" -type f 2>/dev/null | head -1)
+if [ -z "$RPM_FILE" ]; then
+  echo "ERROR: RPM not found in $RPM_BUILD_DIR/RPMS/noarch/"
+  ls -la "$RPM_BUILD_DIR/RPMS/noarch/" 2>/dev/null || true
+  exit 1
+fi
 echo "Copying RPM to project root..."
-cp $RPM_FILE "$OLDPWD/"
+cp "$RPM_FILE" "$OLDPWD/"
 
 # Clean up
 rm -rf "$TMP_DIR"
 
-echo "Done: $(ls -lh "$OLDPWD"/${NAME}-${VERSION}-1.*.noarch.rpm 2>/dev/null | awk '{print $5, $NF}')"
+echo "Done: $(ls -lh "$OLDPWD/${NAME}-${VERSION}-1"*.noarch.rpm 2>/dev/null | awk '{print $5, $NF}')"
