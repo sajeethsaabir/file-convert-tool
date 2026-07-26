@@ -45,7 +45,7 @@ jobs:
           cp target/convertor-tool-1.0.0.jar flatpak-pkg/convertor-tool.jar
 
       - name: Build Flatpak package
-        uses: flatpak/flatpak-github-actions@v6
+        uses: flatpak/flatpak-github-actions@v6.7
         with:
           manifestPath: flatpak-pkg/com.convertor.ConvertorTool.yml
           bundle: convertor-tool-1.0.0-1.x86_64.flatpak
