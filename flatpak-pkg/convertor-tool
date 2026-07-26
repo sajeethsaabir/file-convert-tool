@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -Xmx2g -XX:+UseG1GC -jar /app/share/convertor-tool/convertor-tool.jar "$@"

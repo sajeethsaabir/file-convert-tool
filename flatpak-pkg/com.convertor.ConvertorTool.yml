@@ -1,0 +1,43 @@
+id: com.convertor.ConvertorTool
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: convertor-tool
+finish-args:
+  - --socket=x11
+  - --share=ipc
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=host
+  - --env=JAVA_HOME=/app/jdk
+  - --env=PATH=/app/jdk/bin:/app/bin:/usr/bin
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk21/install.sh
+
+  - name: convertor-tool
+    buildsystem: simple
+    sources:
+      - type: file
+        path: convertor-tool.jar
+        dest-filename: convertor-tool.jar
+      - type: file
+        path: convertor-tool
+        dest-filename: convertor-tool
+      - type: file
+        path: com.convertor.ConvertorTool.desktop
+        dest-filename: com.convertor.ConvertorTool.desktop
+      - type: file
+        path: com.convertor.ConvertorTool.svg
+        dest-filename: com.convertor.ConvertorTool.svg
+      - type: file
+        path: copyright
+        dest-filename: copyright
+    build-commands:
+      - install -Dm755 convertor-tool.jar /app/share/convertor-tool/convertor-tool.jar
+      - install -Dm755 convertor-tool /app/bin/convertor-tool
+      - install -Dm644 com.convertor.ConvertorTool.desktop /app/share/applications/com.convertor.ConvertorTool.desktop
+      - install -Dm644 com.convertor.ConvertorTool.svg /app/share/icons/hicolor/scalable/apps/com.convertor.ConvertorTool.svg
+      - install -Dm644 copyright /app/share/doc/convertor-tool/copyright

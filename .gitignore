@@ -3,6 +3,8 @@ dependency-reduced-pom.xml
 convertor-tool_*.deb
 convertor-tool-*.rpm
 convertor-tool-*.pkg.tar.zst
+convertor-tool-*.flatpak
+flatpak-pkg/convertor-tool.jar
 
 .classpath
 .project

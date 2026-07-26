@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Document Convertor
+Comment=Convert between DOCX, PDF, and Markdown
+Exec=convertor-tool
+Icon=com.convertor.ConvertorTool
+Terminal=false
+Type=Application
+Categories=Office;Utility;
+StartupNotify=true
