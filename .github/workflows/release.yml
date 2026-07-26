@@ -44,12 +44,17 @@ jobs:
         run: |
           cp target/convertor-tool-1.0.0.jar flatpak-pkg/convertor-tool.jar
 
+      - name: Install Flatpak dependencies
+        run: |
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
       - name: Build Flatpak package
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6.7
-        with:
-          manifest-path: flatpak-pkg/com.convertor.ConvertorTool.yml
-          bundle: convertor-tool-1.0.0-1.x86_64.flatpak
-          cache: true
+        run: |
+          flatpak-builder --repo=repo --force-clean --install-deps-from=flathub --user \
+            build flatpak-pkg/com.convertor.ConvertorTool.yml 2>&1
+          flatpak build-bundle repo convertor-tool-1.0.0-1.x86_64.flatpak \
+            com.convertor.ConvertorTool 2>&1
 
       - name: Extract version from tag
         id: get_version
