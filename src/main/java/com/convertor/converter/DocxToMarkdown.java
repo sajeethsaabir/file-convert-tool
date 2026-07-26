@@ -8,11 +8,6 @@ import java.util.List;
 
 public class DocxToMarkdown {
 
-    static {
-        System.setProperty("org.apache.poi.util.SAXHelper.ignoringExternalEntities", "true");
-        System.setProperty("org.apache.poi.util.XMLHelper.ignoreExternalEntities", "true");
-    }
-
     public String convert(InputStream in) throws IOException {
         try (XWPFDocument doc = new XWPFDocument(in)) {
             StringBuilder md = new StringBuilder();

@@ -99,9 +99,8 @@ if command -v makepkg &>/dev/null; then
   cp "${NAME}-${VERSION}-${PKGREL:-1}-any.pkg.tar.zst" "$OLDPWD/" 2>/dev/null || \
     cp *.pkg.tar.zst "$OLDPWD/" 2>/dev/null || true
 else
-  echo "Building with bsdtar (no makepkg available)..."
+  echo "Building with tar --zstd (no makepkg available)..."
   cd "$PKG_DIR"
-  # Create .PKGINFO
   cat > .PKGINFO << PKGINFOEOF
 pkgname = ${NAME}
 pkgver = ${VERSION}-1
@@ -109,27 +108,15 @@ pkgdesc = Bi-directional document converter between DOCX, PDF, and Markdown form
 url = https://github.com/sajeethsaabir/file-convert-tool
 builddate = $(date +%s)
 packager = Convertor Tool Team
-size = $(du -sb "$PKG_DIR" | cut -f1)
+size = $(du -sb --apparent-size "$PKG_DIR" | cut -f1)
 arch = any
 license = Apache
 depend = java-runtime>=21
 PKGINFOEOF
-  # Create .MTREE
-  bsdtar -czf .MTREE --format=mtree \
-    --options='!all,use-set,type,uid,gid,mode,size,time,sha256digest' \
-    -C "$PKG_DIR" . 2>/dev/null || true
-  # Package with bsdtar
   PKG_FILE="${OLDPWD}/${NAME}-${VERSION}-1-any.pkg.tar.zst"
-  bsdtar --zstd -cf "$PKG_FILE" \
-    .PKGINFO .INSTALL .MTREE \
-    usr/bin/convertor-tool \
-    usr/share/${NAME}/${NAME}.jar \
-    usr/share/applications/${NAME}.desktop \
-    usr/share/icons/hicolor/scalable/apps/${NAME}.svg \
-    usr/share/man/man1/${NAME}.1.gz \
-    usr/share/doc/${NAME}/copyright \
-    2>/dev/null || \
-  bsdtar --zstd -cf "$PKG_FILE" .
+  tar --zstd -cf "$PKG_FILE" \
+    --exclude='.MTREE' \
+    -C "$PKG_DIR" .
   echo "Created: $(ls -lh "$PKG_FILE" | awk '{print $5, $NF}')"
 fi
 
